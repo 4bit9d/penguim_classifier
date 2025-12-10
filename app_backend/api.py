@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from .model_util import load_model, predict_instance
+import os
 
 app = FastAPI(title="Pinguim Predictor API")
 
@@ -29,7 +30,7 @@ class PredictionResponse(BaseModel):
 
 
 # Load model on startup
-MODEL_PATH = "model/penguim_classifier_tree_model.pkl"
+MODEL_PATH = os.path.join("app_backend", "model", "penguim_classifier_tree_model.pkl")
 model = load_model(MODEL_PATH)
 
 @app.get("/")

@@ -16,23 +16,56 @@ img_path = "app_frontend/assets/penguim.jpg"
 if os.path.exists(img_path):
     st.image(Image.open(img_path), caption="Iris", use_column_width=True)
 else:
-    st.info("Coloque uma imagem do penguim em 'app_frontend/assets/iris.jpg' para visualizar aqui.")
+    st.info("Coloque uma imagem do penguim em 'app_frontend/assets/penguins.jpg' para visualizar aqui.")
 
 
-# DEFINIÇÃO DOS PARAMETROS DE ENTRADA
+# --------- Função para setar valores ---------
+def set_penguin_params(flipper, body_mass, culmen_len, culmen_dep):
+    st.session_state.flipper_length_mm = flipper
+    st.session_state.body_mass_g = body_mass
+    st.session_state.culmen_length_mm = culmen_len
+    st.session_state.culmen_depth_mm = culmen_dep
+
+# --------- Sidebar ---------
 st.sidebar.header("Parâmetros dos penguins:")
-flipper_length_mm = st.sidebar.number_input("Comprimento da nadadeira em mm (flipper_length_mm)", min_value=0.0, value=5.1, step=0.1, format="%.2f")
-body_mass_g  = st.sidebar.number_input("Massa corporal em g (body_mass_g)", min_value=0.0, value=3.5, step=0.1, format="%.2f")
-culmen_length_mm = st.sidebar.number_input("Comprimento da crista superior do bico em mm (culmen_length_mm)", min_value=0.0, value=1.4, step=0.1, format="%.2f")
-culmen_depth_mm  = st.sidebar.number_input("Profundidade da crista superior do bico em mm (culmen_depth_mm)", min_value=0.0, value=0.2, step=0.1, format="%.2f")
+
+# Botões de autopreenchimento
+if st.sidebar.button("Opção 1: Pinguim Adelie"):
+    set_penguin_params(39.1, 3750.0, 38.0, 18.0)
+if st.sidebar.button("Opção 2: Pinguim Chinstrap"):
+    set_penguin_params(197.0, 4150.0, 52.0, 19.0)
+if st.sidebar.button("Opção 3: Pinguim Gentoo"):
+    set_penguin_params(48.2, 5000.0, 50.0, 20.0)
+
+# Campos de input com session_state para atualizar dinamicamente
+flipper_length_mm = st.sidebar.number_input(
+    "Comprimento da nadadeira em mm (flipper_length_mm)",
+    min_value=0.0, value=float(st.session_state.get("flipper_length_mm", 39.1)),
+    step=0.1, format="%.2f"
+)
+body_mass_g = st.sidebar.number_input(
+    "Massa corporal em g (body_mass_g)",
+    min_value=0.0, value=float(st.session_state.get("body_mass_g", 3750.0)),
+    step=0.1, format="%.2f"
+)
+culmen_length_mm = st.sidebar.number_input(
+    "Comprimento da crista superior do bico em mm (culmen_length_mm)",
+    min_value=0.0, value=float(st.session_state.get("culmen_length_mm", 38.0)),
+    step=0.1, format="%.2f"
+)
+culmen_depth_mm = st.sidebar.number_input(
+    "Profundidade da crista superior do bico em mm (culmen_depth_mm)",
+    min_value=0.0, value=float(st.session_state.get("culmen_depth_mm", 18.0)),
+    step=0.1, format="%.2f"
+)
 
 
 if st.button("Prever"):
     payload = {
-        "sepal_length": flipper_length_mm,
-        "sepal_width": body_mass_g,
-        "petal_length": culmen_length_mm,
-        "petal_width": culmen_depth_mm
+        "flipper_length_mm": flipper_length_mm,
+        "body_mass_g": body_mass_g,
+        "culmen_length_mm": culmen_length_mm,
+        "culmen_depth_mm": culmen_depth_mm
     }
     try:
         with st.spinner("Consultando o modelo..."):

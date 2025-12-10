@@ -5,7 +5,7 @@ import pandas as pd
 import pickle
 import os
 
-def train_and_save(path="app_backend/model/penguim_model.pkl"):
+def train_and_save(path="app_backend/model/penguim_classifier_tree_model.pkl"):
 
     # CARREGA O CONJUNTO DE DADOS DE PINGUINS
     df_penguins_size = pd.read_csv('db/penguins_size.csv', sep=',')

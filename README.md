@@ -6,7 +6,7 @@
 - pip
 
 ## Instalação (recomendo usar virtualenv)
-1. Abra o terminal no diretório do projeto `iris-predictor/`.
+1. Abra o terminal no diretório do projeto `penguim-predictor/`.
 
 2. Criar e ativar ambiente virtual (Windows):
    - `python -m venv .venv`
@@ -20,10 +20,10 @@
    - `pip install -r requirements.txt`
 
 ## Preparar o modelo
-Se você já tem `iris_model.pkl`, coloque-o em `app_backend/model/iris_model.pkl`.
+Se você já tem `penguim_classifier_tree_model.pkl`, coloque-o em `app_backend/model/penguim_classifier_tree_model.pkl`.
 Se NÃO tiver o modelo, rode:
    - `python scripts/train_and_save_model.py`
-Isso vai treinar um RandomForest no dataset Iris e salvar em `app_backend/model/iris_model.pkl`.
+Isso vai treinar um RandomForest no dataset Iris e salvar em `app_backend/model/penguim_classifier_tree_model.pkl`.
 
 ## Rodar a API (FastAPI)
 No terminal com ambiente ativado:
@@ -31,7 +31,7 @@ No terminal com ambiente ativado:
 A API ficará disponível em `http://localhost:8000/`.
 
 Testar endpoint:
-   - `curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d "{\"sepal_length\":5.1, \"sepal_width\":3.5, \"petal_length\":1.4, \"petal_width\":0.2}"`
+   - `curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d "{\"culmen_length_mm\":39.1, \"culmen_depth_mm\":18.7, \"flipper_length_mm\":181, \"body_mass_g\":3750}"`
 
 ## Rodar a interface (Streamlit)
 Em outro terminal (também com o venv ativado):
